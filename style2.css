@@ -52,11 +52,14 @@ body{
     text-transform: uppercase;
     font-weight: 700;
 }
+.box h3 {
+    color: lightskyblue;
+}
 .box small
 {
     color: white;
 }
-.box input[type="text"],.box input[type="password"],.box input[type="number"]
+.box input[type="text"],.box input[type="password"],.box input[type="tel"]
 {
     border: 0;
     background: none;

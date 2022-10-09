@@ -14,6 +14,16 @@ const pool = new Pool ({
     }
 });
 
+
+const storeLogins = (user, pw, pn) => {
+    pool.query('INSERT INTO logins (username, password, phonenumber), values (user, pw, pn);', [user, pw, pn], (err, rows) => {
+        if(err) {
+            throw err
+        }
+        response.status(200).json(results.rows)
+    })
+}
+
 // MADE FOR TESTING
 const getUsers = (request, response) => {
     pool.query('SELECT * FROM users', (error, results) => {
@@ -24,9 +34,10 @@ const getUsers = (request, response) => {
     })
 }
 
-// module.exports = {
-//     getUsers
-// }
+module.exports = {
+    getUsers,
+    storeLogins
+}
 
 
 const express = require('express')
@@ -47,7 +58,7 @@ app.use(express.static(intialPath))
 
 app.get('/', (req, res) => {
     // __dirname is the directory name of the current module. So it goes current and then index
-    res.sendFile(path.join(__dirname, 'index.html'))
+    res.sendFile(path.join(__dirname, 'website.html'))
     res.json({info: 'HELLO WORLD'})
 })
 
@@ -64,6 +75,34 @@ app.get('/users', getUsers)
 
 app.get('/', (request, response) => {
     response.json({info: 'HELLO WORLD'})
+})
+
+app.post('/register-user', (req, res) => {
+    const { name, password, tel } = req.body;
+    if (!name.length || !email.length || !tel.length) {
+        res.json('please fill the fields');
+    } else {
+        pool.query('INSERT INTO logins (username, password, phonenumber), values (user, pw, pn);', [name, password, tel], (err, rows) => {
+            if(err) {
+                throw err
+            }
+            response.status(200).json(results.rows)
+        })
+        pool("logins").insert({
+            name: name,
+            tel: tel,
+            password: password
+        })
+        .returning(["name", "tel"])
+        .then(data => {
+            res.json(data[0])
+        })
+        .catch(err => {
+            if(err.detail.includes('already exists')){
+                res.json('number already registered');
+            }
+        })
+    }
 })
 
 app.listen(port, () => {
