@@ -1,6 +1,6 @@
 function validate() {
-    var username=document.getElementById("username");
-    var password=document.getElementById("password");
+    const username=document.getElementById("username");
+    const password=document.getElementById("password");
     if (username && password){
         alert("login successful");
         window.open("website.html");
