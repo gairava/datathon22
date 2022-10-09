@@ -5,7 +5,7 @@ body{
     background: url(background.jpg);
     background-size: cover;
 }
-.welcomeNote 
+.welcomeNote, .Sending
 {
     width:400px;
     padding: 20px;
@@ -19,7 +19,7 @@ body{
     text-transform: uppercase;
 
 }
-.welcomeNote small 
+.welcomeNote small, .Sending small
 {
     color: lightblue;
     text-transform: lowercase;
